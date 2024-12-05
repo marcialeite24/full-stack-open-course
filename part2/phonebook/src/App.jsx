@@ -9,6 +9,8 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();    
@@ -26,10 +28,12 @@ const App = () => {
             setNewName('');
             setNewNumber('');
           })
-          .catch(error => {
-            alert('Failed to update person. Please try again.');
-            console.error(error);
-          });
+          .catch(() => {
+            setErrorMessage(`Information of ${newName} has already been removed from server`);
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 5000); 
+      });
       }    
     } else {
       services
@@ -38,6 +42,10 @@ const App = () => {
           setPersons(persons.concat(returnedPerson));
           setNewName('');
           setNewNumber('');
+          setSuccessMessage(`Added ${returnedPerson.name}`);
+          setTimeout(() => {
+            setSuccessMessage(null);
+          }, 5000);          
         })
         .catch(error => {
           alert('Failed to add person. Please try again.');
@@ -60,8 +68,13 @@ const App = () => {
   const handleDelete = (id, name) => {
     console.log(name, id);
     if(window.confirm(`Delete ${name}?`)) {
-      services.deletePerson(id);  
-      setPersons(persons.filter(person => person.id !== id));
+      services
+        .deletePerson(id)
+        .then(setPersons(persons.filter(person => person.id !== id)))
+        .catch(error => {           
+          alert('Failed to delete person. Please try again.');
+          console.error(error);
+        });
     } 
   }
 
@@ -79,6 +92,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      {successMessage && <div className='success-message'>{successMessage}</div>}
+      {errorMessage && <div className='error-message'>{errorMessage}</div>}
       <Filter filter={filter} handleFilter={handleFilter} />
 
       <h2>Add a new</h2>
