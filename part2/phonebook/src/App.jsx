@@ -1,32 +1,49 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
+import services from './services';
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ]); 
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    if(persons.some(person => person.name == newName)) {
-      alert(`${newName} is already added to phonebook`);
-      return;
-    }
+    event.preventDefault();    
     const newPerson = {
       name: newName,
       number: newNumber
     }
-    setPersons(persons.concat(newPerson));
-    setNewName('');
-    setNewNumber('');
+    if(persons.find(person => person.name == newName)) {
+      if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        const person = persons.find(person => person.name == newName);
+        services
+          .updatePerson(person.id, newPerson)
+          .then(updatedPerson => {
+            setPersons(persons.map(p => (p.id === person.id ? updatedPerson : p)));
+            setNewName('');
+            setNewNumber('');
+          })
+          .catch(error => {
+            alert('Failed to update person. Please try again.');
+            console.error(error);
+          });
+      }    
+    } else {
+      services
+        .addPerson(newPerson)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson));
+          setNewName('');
+          setNewNumber('');
+        })
+        .catch(error => {
+          alert('Failed to add person. Please try again.');
+          console.error(error);
+        });
+    }
   }
 
   const handleNameChange = (event) => {
@@ -40,8 +57,25 @@ const App = () => {
     setFilter(event.target.value)
   }
 
+  const handleDelete = (id, name) => {
+    console.log(name, id);
+    if(window.confirm(`Delete ${name}?`)) {
+      services.deletePerson(id);  
+      setPersons(persons.filter(person => person.id !== id));
+    } 
+  }
+
   const filteredPersons = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()));
 
+  useEffect(() => {
+    services
+      .getAll()
+      .then(response => { 
+        setPersons(response);
+      });    
+  }, []);
+
+ 
   return (
     <div>
       <h2>Phonebook</h2>
@@ -51,7 +85,7 @@ const App = () => {
       <PersonForm handleSubmit={handleSubmit} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} /> 
 
       <h2>Numbers</h2>
-      <Persons filteredPersons={filteredPersons}/>      
+      <Persons filteredPersons={filteredPersons} handleDelete={handleDelete} />  
     </div>
   )
 }
