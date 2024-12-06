@@ -4,7 +4,7 @@ const Persons = ({filteredPersons, handleDelete}) => {
         <>
             {filteredPersons.map((person, index) => (
                 <div key={index}>
-                <p>{person.name} {person.number}</p>
+                <span>{person.name} {person.number} </span>
                 <button onClick={() => handleDelete(person.id, person.name)}>Delete</button>
                 </div>                
             ))}
