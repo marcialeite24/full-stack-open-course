@@ -63,7 +63,9 @@ app.get('/api/persons/:id', (req, res) => {
 
 app.delete('/api/persons/:id', (req, res) => {
     const id = req.params.id;
-    const index = persons.findIndex(person => person.id === id);
+    console.log(id);
+    console.log(persons);
+    const index = persons.findIndex(person => person.id === id);    
     if(index !== -1) {
         persons.splice(index, 1);
         res.status(204).end(); 
@@ -74,6 +76,8 @@ app.delete('/api/persons/:id', (req, res) => {
 
 app.post('/api/persons', (req, res) => {
     const body = req.body;
+    const random = Math.floor(Math.random() * 1000000);
+    const id = random.toString();
 
     if (body.name === undefined || body.number === undefined) {
         return res.status(400).json({error: 'content missing'});
@@ -84,7 +88,7 @@ app.post('/api/persons', (req, res) => {
     }
 
     const newPerson = {
-        id: Math.floor(Math.random() * 1000000),
+        id: id,
         name: body.name,
         number: body.number,
     };
