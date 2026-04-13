@@ -8,7 +8,7 @@ const Header = (props) => {
 
 const Part = (props) => {
   return (
-      <p>{props.p} {props.e}</p>
+    <p>{props.p} {props.e}</p>
   )
 }
 
@@ -23,11 +23,11 @@ const Content = (props) => {
 }
 
 const Total = (props) => {
-  let total = 0;
+  let total = 0
   return (
     <>
       { props.course.parts.map( i => {
-          total += i.exercises;
+        total += i.exercises
       })
 
       }

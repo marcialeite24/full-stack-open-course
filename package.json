@@ -1,0 +1,7 @@
+{
+  "name": "full-stack-open-course",
+  "version": "1.0.0",
+  "scripts": {
+    "lint": "npm run lint --prefix part1/courseinfo && npm run lint --prefix part1/unicafe && npm run lint --prefix part1/anecdotes && npm run lint --prefix part2/courseinfo && npm run lint --prefix part2/countries && npm run lint --prefix part2/phonebook && npm run lint --prefix part3/phonebook && npm run lint --prefix part3/phonebook/frontend"
+  }
+}

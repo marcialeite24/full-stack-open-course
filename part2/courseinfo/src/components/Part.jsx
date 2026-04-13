@@ -1,12 +1,12 @@
 
-const Part = ({parts}) => {
-    return (
-        <>
-            {parts.map(part => (
-                <p key={part.id}>{part.name} {part.exercises}</p>
-            ))}
-        </>
-    )
+const Part = ({ parts }) => {
+  return (
+    <>
+      {parts.map(part => (
+        <p key={part.id}>{part.name} {part.exercises}</p>
+      ))}
+    </>
+  )
 }
 
-export default Part;
+export default Part
