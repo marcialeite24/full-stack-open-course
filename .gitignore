@@ -22,6 +22,9 @@ dist-ssr
 *.sln
 *.sw?
 
+# Claude
+.claude/
+
 # Environment variables
 .env
 .env.local

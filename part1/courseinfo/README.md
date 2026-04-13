@@ -1,8 +1,9 @@
-# React + Vite
+# Course Info
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React app that displays structured course information — course name, its parts and the total number of exercises.
 
-Currently, two official plugins are available:
+The focus here was on component decomposition: breaking a UI into `Header`, `Content`, `Part` and `Total` components, each with a single responsibility, and understanding how data flows down through props.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Stack
+
+- React + Vite

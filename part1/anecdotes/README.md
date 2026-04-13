@@ -1,8 +1,11 @@
-# React + Vite
+# Anecdotes
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small app that displays a random programming anecdote and lets users vote for their favourites. The anecdote with the most votes is shown at the bottom.
 
-Currently, two official plugins are available:
+The interesting challenge here was storing vote counts as an array in state — one entry per anecdote — and updating it immutably using the spread operator rather than mutating the array directly.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Random selection uses `Math.random()` to pick a new index on each button click.
+
+## Stack
+
+- React + Vite

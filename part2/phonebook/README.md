@@ -1,8 +1,19 @@
-# React + Vite
+# Phonebook
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A phonebook app with full CRUD functionality — add contacts, update existing numbers, delete entries, and filter the list in real time.
 
-Currently, two official plugins are available:
+Connected to a backend via axios, with all data operations going through a dedicated services module to keep the component logic clean. Success and error messages are shown to the user and dismissed automatically after a few seconds.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+
+- Add a new contact with name and number
+- If the name already exists, prompt the user to update the number
+- Delete a contact with confirmation
+- Filter contacts by name in real time
+- Success and error notification banners
+
+## Stack
+
+- React + Vite
+- axios
+- JSON Server (dev backend)

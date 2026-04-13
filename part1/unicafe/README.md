@@ -1,8 +1,11 @@
-# React + Vite
+# Unicafe
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A feedback app for collecting good, neutral and bad ratings, displaying live statistics — total count, average score and percentage of positive feedback.
 
-Currently, two official plugins are available:
+The main goal was getting comfortable with `useState`: tracking multiple independent state values, updating them from button clicks, and understanding that React re-renders the component every time state changes.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Statistics are only shown once at least one piece of feedback has been given, which introduced conditional rendering.
+
+## Stack
+
+- React + Vite
