@@ -4,11 +4,17 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "node --watch index.js"
+    "dev": "node --watch index.js",
+    "test": "node --test",
+    "lint": "eslint ."
   },
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.21.2",
     "mongoose": "^8.13.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.1"
   }
 }
