@@ -104,6 +104,34 @@ test('blog without url returns 400', async () => {
     .expect(400)
 })
 
+test('a blog can be deleted', async () => {
+  const blogsAtStart = await Blog.find({})
+  const blogToDelete = blogsAtStart[0]
+
+  await api
+    .delete(`/api/blogs/${blogToDelete.id}`)
+    .expect(204)
+
+  const blogsAtEnd = await Blog.find({})
+  const ids = blogsAtEnd.map(b => b.id)
+  assert(!ids.includes(blogToDelete.id))
+  assert.strictEqual(blogsAtEnd.length, initialBlogs.length - 1)
+})
+
+test('a blog likes can be updated', async () => {
+  const blogsAtStart = await Blog.find({})
+  const blogToUpdate = blogsAtStart[0]
+
+  await api
+    .put(`/api/blogs/${blogToUpdate.id}`)
+    .send({ likes: 99 })
+    .expect(200)
+
+  const blogsAtEnd = await Blog.find({})
+  const updated = blogsAtEnd.find(b => b.id === blogToUpdate.id)
+  assert.strictEqual(updated.likes, 99)
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
