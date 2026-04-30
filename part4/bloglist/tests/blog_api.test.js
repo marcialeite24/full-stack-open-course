@@ -48,6 +48,62 @@ test('blogs have id property instead of _id', async () => {
   })
 })
 
+test('creates a new blog', async () => {
+  const newBlog = {
+    title: 'New blog test',
+    author: 'Emma',
+    url: 'http://example.com/3',
+    likes: 5,
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api.get('/api/blogs')
+  const contents = response.body.map(r => r.title)
+  assert.strictEqual(response.body.length, initialBlogs.length + 1)
+  assert(contents.includes('New blog test'))
+})
+
+test('creating a blog without a likes field, it should default to 0', async () => {
+  const newBlog = {
+    title: 'New blog test without likes',
+    author: 'Emma',
+    url: 'http://example.com/4'
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api.get('/api/blogs')
+  const contents = response.body.map(r => r.likes)
+  assert.strictEqual(contents[initialBlogs.length], 0)
+})
+
+test('blog without title returns 400', async () => {
+  const newBlog = { author: 'Emma', url: 'http://example.com/5', likes: 7 }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+})
+
+test('blog without url returns 400', async () => {
+  const newBlog = { title: 'Blog without url', author: 'Emma', likes: 7 }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
